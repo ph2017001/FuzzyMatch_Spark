@@ -4,6 +4,8 @@ from unittest import TestCase
 from pyspark.sql import *
 from pyspark.sql.types import *
 
+from lib.utils import get_pandas_df, create_pipeline
+
 
 class FuzzyMatchTestCase(TestCase):
 
@@ -14,20 +16,15 @@ class FuzzyMatchTestCase(TestCase):
             .appName("FuzzyMatch_Spark") \
             .getOrCreate()
 
-    # def test_datafile_loading(self):
-    #     sample_df = load_survey_df(self.spark, "data/sample.csv")
-    #     result_count = sample_df.count()
-    #     self.assertEqual(result_count, 9, "Record count should be 9")
-    #
-    # def test_country_count(self):
-    #     sample_df = load_survey_df(self.spark, "data/sample.csv")
-    #     count_list = count_by_country(sample_df).collect()
-    #     count_dict = dict()
-    #     for row in count_list:
-    #         count_dict[row["Country"]] = row["count"]
-    #     self.assertEqual(count_dict["United States"], 4, "Count for United States should be 4")
-    #     self.assertEqual(count_dict["Canada"], 2, "Count for Canada should be 2")
-    #     self.assertEqual(count_dict["United Kingdom"], 1, "Count for Unites Kingdom should be 1")
+    def test_datafile_loading(self):
+        ref_df = get_pandas_df("data/sample_test.xlsx", "reference")
+        que_df = get_pandas_df("data/sample_test.xlsx", "query")
+        self.assertEqual(len(ref_df), 39, "Reference Record count should be 40 in sample")
+        self.assertEqual(len(que_df), 3, "Query Record count should be 3 in sample")
+
+    def test_pipeline_stages(self):
+        test_pipeline = create_pipeline()
+        self.assertEqual(len(test_pipeline.getStages()), 8, "8 Stages should be present in the pipeline")
 
     @classmethod
     def tearDownClass(cls) -> None:

@@ -7,7 +7,7 @@ from pyspark.ml import Pipeline
 from pyspark.ml.feature import StopWordsRemover, Tokenizer, NGram, HashingTF, MinHashLSH, RegexTokenizer, SQLTransformer
 
 from lib.utils import get_spark_app_config, get_column_names, get_pandas_df, save_results_to_excel, \
-    merge_result_with_query
+    merge_result_with_query, create_pipeline
 
 if __name__ == "__main__":
 
@@ -55,16 +55,7 @@ if __name__ == "__main__":
     # 7. hashingTF
     # 8. MinHashLSH
     # The pipeline should transform the "Composite_Key" column of the input dataframe
-    pipeline = Pipeline(stages=[
-        SQLTransformer(statement="SELECT *, lower(Composite_Key) lower FROM __THIS__"),
-        Tokenizer(inputCol="lower", outputCol="token"),
-        StopWordsRemover(inputCol="token", outputCol="stop"),
-        SQLTransformer(statement="SELECT *, concat_ws(' ', stop) concat FROM __THIS__"),
-        RegexTokenizer(pattern="", inputCol="concat", outputCol="char", minTokenLength=1),
-        NGram(n=2, inputCol="char", outputCol="ngram"),
-        HashingTF(inputCol="ngram", outputCol="vector"),
-        MinHashLSH(inputCol="vector", outputCol="lsh", numHashTables=3)
-    ])
+    pipeline = create_pipeline()
 
     # Fit the pipeline to the training reference_df to create the model
     model = pipeline.fit(reference_df)
