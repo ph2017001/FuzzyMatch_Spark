@@ -85,7 +85,7 @@ if __name__ == "__main__":
     # Using the last stage of the previously defined model-pipeline, perform a approxSimilarityJoin
     # between the transformed dataframes with the threshold set above and .
     # The join produces three columns : datasetA, datasetB, distanceColumn (as provided)
-    # This join may return more number of rows corresponding to a single row in the left dataframe
+    # This join may return more number of rows corresponding to a single row in the left dataframe based on distance
     result = model.stages[-1].approxSimilarityJoin(query_df_res, reference_df_res, distance_threshold, "jaccardDist")
 
     # Logging input, result row counts
