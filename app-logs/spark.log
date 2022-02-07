@@ -1,0 +1,8 @@
+22/02/07 03:26:36 INFO FuzzyMatch_Spark: App Configuration Loaded and Session Object Created
+22/02/07 03:26:36 INFO FuzzyMatch_Spark: Starting Fuzzy Match - Spark
+22/02/07 03:26:36 INFO FuzzyMatch_Spark: Input file parsed in pandas dataframes
+22/02/07 03:26:38 INFO FuzzyMatch_Spark: Spark Dataframes created
+22/02/07 03:26:39 INFO FuzzyMatch_Spark: Model created by fitting to reference spark dataframe
+22/02/07 03:26:46 INFO FuzzyMatch_Spark: with the distance threshold of 0.6, total 82/82 query rows matched
+22/02/07 03:26:48 INFO FuzzyMatch_Spark: Persisting the results to the query sheet in the input file.
+22/02/07 03:26:48 INFO FuzzyMatch_Spark: Stopping FuzzyMatch - Spark
